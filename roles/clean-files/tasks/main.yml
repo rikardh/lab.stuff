@@ -1,0 +1,9 @@
+---
+# clean config directories for affected devices before creating new configs for them
+    - name: remove-device-config
+      file: path=configs/{{ inventory_hostname }}.conf state=absent
+      tags: clean-files
+
+    - name: remove-device-snippets
+      file: path=configs/snippets/{{ inventory_hostname }} state=absent
+      tags: clean-files

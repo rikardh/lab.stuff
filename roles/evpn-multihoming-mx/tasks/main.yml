@@ -1,0 +1,7 @@
+---
+# tasks file for evpn-multihoming-mx
+  - name: Create config snippet directory for device
+    file: path=configs/snippets/{{ inventory_hostname }} state=directory
+
+  - name: Build default configs for devices and putting into -snippets- directory
+    template: src=evpn-multihoming-mx.j2 dest=configs/snippets/{{ inventory_hostname }}/evpn-multihoming-mx.conf

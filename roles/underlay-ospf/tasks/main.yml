@@ -1,0 +1,9 @@
+---
+# Builds your underly config with a config for MX and QFX
+  - name: Create config snippet directory for device
+    file: path=configs/snippets/{{ inventory_hostname }} state=directory
+    tags: ospf_underay
+
+  - name: Build default configs for devices and putting into -snippets- directory
+    template: src=underlay-ospf.j2 dest=configs/snippets/{{ inventory_hostname }}/underlay-ospf.conf
+    tags: ospf_underlay

@@ -1,0 +1,28 @@
+---
+# JUNOS command playbook
+
+- name: Build configs for the lab setup
+  hosts: "{{ hosts }}"
+  vars_files:
+    - creds.yml
+  connection: local
+  gather_facts: no
+  roles:
+    - Juniper.junos
+
+  tasks:
+    - name: Running a JUNOS command(s) on host(s) {{ hosts }}
+      junos_command:
+        timeout: "60"
+        display: "text"
+        host: "{{ ansible_host }}"
+        username: "{{ login_name }}"
+        password: "{{ login_password }}"
+        commands:
+          - "show interface terse"
+        format: "text" # json sort of works in my modified junos_command.py /Rikard
+      register: device_output
+
+    - name: Show result
+      debug:
+        msg: "{{ device_output }}"

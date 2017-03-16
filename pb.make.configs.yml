@@ -1,0 +1,28 @@
+---
+# Main playbook for lab-config
+
+- name: Build configs for the lab setup
+  hosts: "{{ hosts }}"
+  connection: local
+  gather_facts: no
+
+  roles:
+    - clean-files
+    - common
+    - underlay-ospf
+    - evpn-ibgp
+    - overlay-mx-mpls
+    - evpn-multihoming-mx
+
+# add additional roles above to build complete configurations
+
+  tasks:
+    - name: check if the snippets directory exists before we try to assemble
+      local_action: stat path=configs/snippets/{{ inventory_hostname }}
+      register: snippets
+      tags: always
+
+    - name: Assemble snippets into one config file for uploading to device from the devices -snippets- directory
+      assemble: src=configs/snippets/{{ inventory_hostname }} dest=configs/{{ inventory_hostname }}.conf
+      when: snippets.stat.exists == True
+      tags: always

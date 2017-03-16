@@ -1,0 +1,20 @@
+apply-groups underlay_ospf
+groups {
+
+    underlay_ospf {
+          protocols {
+                    ospf {
+                        area 0.0.0.0 {
+                         {% if underlay_inet_interfaces is defined %}
+                          {% for underlay_if in underlay_inet_interfaces %}
+                            interface {{ underlay_if }};
+                          {% endfor %}
+                         {% endif %}
+                            interface lo0.0 {
+                                passive;
+                            }
+                        }
+                    }
+                 }
+           }
+}

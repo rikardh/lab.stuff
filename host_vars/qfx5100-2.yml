@@ -1,0 +1,3 @@
+host_name: qfx5100-2
+management_interface_ip: 172.30.105.42/23
+lo0_ip: 1.1.105.42

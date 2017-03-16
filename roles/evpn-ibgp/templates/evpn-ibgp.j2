@@ -1,0 +1,29 @@
+
+apply-groups evpn-ibgp
+groups {
+    evpn-ibgp {
+          routing-options {
+            autonomous-system 65000;
+          }
+
+          protocols {
+              bgp  {
+                group evpn {
+                   type internal;
+                   local-address {{ lo0_ip }};
+                   family evpn {
+                       signaling;
+                   }
+                   {% for ahost in ansible_play_hosts %}
+                   {% if inventory_hostname == ahost %}
+                     {% else %}
+                    neighbor {{ hostvars[ahost]['lo0_ip'] }} {
+                        description "{{ hostvars[ahost]['host_name'] }}";
+                    }
+                   {% endif %}
+                   {% endfor %}
+                 }
+              }
+          }
+  }
+}

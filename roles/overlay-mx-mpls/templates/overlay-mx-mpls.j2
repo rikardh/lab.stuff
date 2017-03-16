@@ -1,0 +1,33 @@
+apply-groups overlay-mx-mpls
+groups {
+    overlay-mx-mpls {
+          protocols {
+                    mpls {
+                        interface all;
+                        interface fxp0.0 {
+                            disable;
+                        }
+                    }
+                    ldp {
+                        interface all;
+                        interface fxp0.0 {
+                            disable;
+                        }
+                    }
+           }
+           {% if inet_interfaces is defined %}
+                     interfaces {
+                     {% for inet_if in inet_interfaces %}
+                     {{ inet_if.name }} {
+                         unit 0 {
+                             family inet {
+                                 address {{ inet_if.ip_address }};
+                             }
+                             family mpls;
+                         }
+                     }
+                     {% endfor %}
+                   }
+           {% endif %}
+    }
+}

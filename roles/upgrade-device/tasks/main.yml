@@ -1,0 +1,10 @@
+---
+# Upgrades devices with the image in the image directory
+  - name: Upgrades devices
+    junos_package:
+      host: "{{ ansible_host }}"
+      reboot: yes
+      src: "{{ image }}"
+      user: "{{ login_name }}"
+      passwd: "{{ login_password }}"
+#      logfile: images/upgrade.log

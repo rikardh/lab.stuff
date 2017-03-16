@@ -1,0 +1,95 @@
+replace:
+system {
+    host-name {{ host_name }};
+    domain-name stolab;
+    time-zone Europe/Stockholm;
+    root-authentication {
+        encrypted-password "$1$lNsjIUvV$s5gNdNqVKI3WUqydz5ozj."; ## SECRET-DATA
+    }
+
+    login {
+        {% for user in users %}
+        user {{ user.name }} {
+            class super-user;
+            authentication {
+              {% if user.id_rsa_pub is defined %}
+                ssh-rsa "{{ user.id_rsa_pub }}"; ## SECRET-DATA
+              {% endif %}
+              {% if user.encrypted_password is defined %}
+                encrypted-password "{{ user.encrypted_password }}"; ## SECRET-DATA
+              {% endif %}
+            }
+        }
+        {% endfor %}
+    }
+    services {
+        ftp;
+        ssh {
+            root-login allow;
+        }
+        telnet;
+        netconf {
+            ssh;
+        }
+    }
+    syslog {
+        file default-log-messages {
+            any any;
+            match "(requested 'commit' operation)|(copying configuration to juniper.save)|ifAdminStatus|(FRU power)|(FRU removal)|(FRU insertion)|(link UP)|(vc add)|(vc delete)|transitioned|Transferred|transfer-file|QFABRIC_NETWORK_NODE_GROUP|QFABRIC_SERVER_NODE_GROUP|QFABRIC_NODE|(license add)|(license delete)|GRES";
+            structured-data;
+        }
+        console {
+            any emergency;
+        }
+    }
+    ntp {
+{% for server in ntp_servers %}
+        server {{ server }};
+{% endfor %}
+    }
+}
+interfaces
+ {
+    lo0 {
+        unit 0 {
+            family inet {
+                address {{ lo0_ip }}/32;
+            }
+        }
+    }
+    {{ management_interface }} {
+        unit 0 {
+            family inet {
+                address {{ management_interface_ip }};
+            }
+        }
+    }
+}
+
+routing-options {
+    router-id {{ lo0_ip }};
+    static {
+        route 0.0.0.0/0 next-hop {{ default_route }};
+    }
+}
+
+protocols {
+  lldp {
+    interface all;
+  }
+}
+
+chassis {
+    aggregated-devices {
+        ethernet {
+            device-count {{ ae_interface_amount }};
+        }
+    }
+}
+snmp {
+    community public {
+        clients {
+            172.30.104.0/23;
+        }
+    }
+}

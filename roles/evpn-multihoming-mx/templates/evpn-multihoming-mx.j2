@@ -1,0 +1,27 @@
+
+{% if ae_interfaces is defined %}
+apply-groups evpn-multihoming-mx
+groups {
+    evpn-multihoming-mx {
+    interfaces {
+    {% for ae_if in ae_interfaces %}
+                {{ ae_if.name }} {
+                  description "{{ ae_if.name }} {{ ae_if.description }}"
+                  esi {
+                    {{ ae_if.esi }};
+                    {{ ae_if.mode }};
+                  }
+                }
+            {% for ae_if_members in ae_if.ae_members %}
+                {{ ae_if_members }} {
+                  gigether-options {
+                    802.3ad {{ ae_if.name }};
+                  }
+                }
+
+            {% endfor %}
+          {% endfor %}
+        }
+    }
+}
+{% endif %}
