@@ -1,11 +1,10 @@
 ---
-# Builds config with a config for MX and QFX
+# tasks file for inet-topology
+
   - name: Create config snippet directory for device
     file: path=configs/snippets/{{ inventory_hostname }} state=directory
     tags: common
 
   - name: Build default configs for devices and putting into -snippets- directory
-    template: src=common.j2 dest=configs/snippets/{{ inventory_hostname }}/common.conf
+    template: src=inet_topology.j2 dest=configs/snippets/{{ inventory_hostname }}/inet_topology.conf
     tags: common
-
-  

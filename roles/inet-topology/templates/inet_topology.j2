@@ -1,0 +1,22 @@
+{# if inet_topology_links is defined #}
+apply-groups inet_topology_links
+groups {
+    inet_topology_links {
+          interfaces {
+{% for link in inet_topology_links %}
+{% if link.link_device == inventory_hostname %}
+          {{ link.link_if }} {
+              description "{{ link.link_if }} {{ link.link_name }}"
+              mtu 9192
+              unit 0 {
+                  family inet {
+                      address {{ link.link_ip }};
+                  }
+              }
+          }
+{% endif %}
+{% endfor %}
+        }
+    }
+}
+{# endif #}

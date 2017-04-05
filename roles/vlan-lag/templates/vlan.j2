@@ -1,0 +1,47 @@
+
+{% if vlans is defined %}
+apply-groups vlan-irb
+groups {
+    vlan-irb {
+      vlans {
+{% for vlan in vlans %}
+        {{ vlan.name }} {
+          vlan-id {{ vlan.id }};
+          l3-interface irb.{{ vlan.id }};
+        }
+{% endfor %}
+      }
+
+    interfaces {
+      irb {
+{% for vlan in vlans %}
+{% if vlan.irb is defined %}
+        unit {{ vlan.id }} {
+          family inet {
+            address {{ vlan.irb }};
+           }
+         }
+{% endif %}
+{% endfor %}
+       }
+
+
+{% for vlan in vlans %}
+{% for trunk_if in vlan.trunk_ifs %}
+       {{ trunk_if }} {
+         unit 0 {
+           family ethernet-switching {
+             interface-mode trunk;
+             vlan {
+               members {{ vlan.name }};
+             }
+           }
+         }
+       }
+{% endfor %}
+{% endfor %}
+
+    }
+  }
+}
+{% endif %}

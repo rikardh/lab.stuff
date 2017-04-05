@@ -1,1 +1,5 @@
 management_interface: vme
+
+mpls: "no"
+router: "no"
+l2switch: "yes"

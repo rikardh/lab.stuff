@@ -1,0 +1,180 @@
+inet_topology_links:
+  - link_device: mx80-r03-7
+    link_name: link1
+    link_if: ge-1/0/3
+    link_ip: 1.0.0.0/31
+  - link_device: mx80-r03-8
+    link_name: link1
+    link_if: ge-1/0/3
+    link_ip: 1.0.0.1/31
+
+  - link_device: mx80-r03-2
+    link_name: link2
+    link_if: ge-1/0/0
+    link_ip: 1.0.0.2/31
+  - link_device: mx80-r03-8
+    link_name: link2
+    link_if: ge-1/0/0
+    link_ip: 1.0.0.3/31
+
+#  - link_device: mx80-r03-1
+#    link_name: link3
+#    link_if: ge-1/0/0
+#    link_ip: 1.0.0.4/31
+#  - link_device: mx80-r03-7
+#    link_name: link3
+#    link_if: ge-1/0/0
+#    link_ip: 1.0.0.5/31
+
+  - link_device: mx80-r03-2
+    link_name: link4
+    link_if: ge-1/0/6
+    link_ip: 1.0.0.6/31
+  - link_device: mx80-r03-7
+    link_name: link4
+    link_if: ge-1/0/6
+    link_ip: 1.0.0.7/31
+
+#  - link_device: mx80-r03-1
+#    link_name: link5
+#    link_if: ge-1/0/5
+#    link_ip: 1.0.0.8/31
+#  - link_device: mx80-r03-8
+#    link_name: link5
+#    link_if: ge-1/0/5
+#    link_ip: 1.0.0.9/31
+
+#  - link_device: mx80-r03-1
+#    link_name: link6
+#    link_if: ge-1/0/3
+#    link_ip: 1.0.0.10/31
+#  - link_device: mx80-r03-2
+#    link_name: link6
+#    link_if: ge-1/0/3
+#    link_ip: 1.0.0.11/31
+
+  - link_device: mx80-r03-6
+    link_name: link7
+    link_if: ge-1/0/1
+    link_ip: 1.0.0.12/31
+  - link_device: mx80-r03-8
+    link_name: link7
+    link_if: ge-1/0/1
+    link_ip: 1.0.0.13/31
+
+  - link_device: mx80-r03-5
+    link_name: link8
+    link_if: ge-1/0/1
+    link_ip: 1.0.0.14/31
+  - link_device: mx80-r03-7
+    link_name: link8
+    link_if: ge-1/0/1
+    link_ip: 1.0.0.15/31
+
+#  - link_device: mx80-r03-1
+#    link_name: link9
+#    link_if: ge-1/0/1
+#    link_ip: 1.0.0.16/31
+#  - link_device: mx80-r03-3
+#    link_name: link9
+#    link_if: ge-1/0/1
+#    link_ip: 1.0.0.17/31
+
+  - link_device: mx80-r03-2
+    link_name: link10
+    link_if: ge-1/0/2
+    link_ip: 1.0.0.18/31
+  - link_device: mx80-r03-4
+    link_name: link10
+    link_if: ge-1/0/2
+    link_ip: 1.0.0.19/31
+
+  - link_device: mx80-r03-2
+    link_name: link11
+    link_if: ge-1/0/5
+    link_ip: 1.0.0.20/31
+  - link_device: mx80-r03-3
+    link_name: link11
+    link_if: ge-1/0/5
+    link_ip: 1.0.0.21/31
+
+#  - link_device: mx80-r03-1
+#    link_name: link12
+#    link_if: ge-1/0/6
+#    link_ip: 1.0.0.22/31
+#  - link_device: mx80-r03-4
+#    link_name: link12
+#    link_if: ge-1/0/6
+#    link_ip: 1.0.0.23/31
+
+#  - link_device: mx80-r03-3
+#    link_name: link13
+#    link_if: ge-1/0/3
+#    link_ip: 1.0.0.24/31
+#  - link_device: mx80-r03-4
+#    link_name: link13
+#    link_if: ge-1/0/3
+#    link_ip: 1.0.0.25/31
+
+  - link_device: mx80-r03-4
+    link_name: link14
+    link_if: ge-1/0/0
+    link_ip: 1.0.0.26/31
+  - link_device: mx80-r03-6
+    link_name: link14
+    link_if: ge-1/0/0
+    link_ip: 1.0.0.27/31
+
+  - link_device: mx80-r03-3
+    link_name: link15
+    link_if: ge-1/0/0
+    link_ip: 1.0.0.28/31
+  - link_device: mx80-r03-5
+    link_name: link15
+    link_if: ge-1/0/0
+    link_ip: 1.0.0.29/31
+
+  - link_device: mx80-r03-4
+    link_name: link16
+    link_if: ge-1/0/5
+    link_ip: 1.0.0.30/31
+  - link_device: mx80-r03-5
+    link_name: link16
+    link_if: ge-1/0/5
+    link_ip: 1.0.0.31/31
+
+  - link_device: mx80-r03-3
+    link_name: link17
+    link_if: ge-1/0/6
+    link_ip: 1.0.0.32/31
+  - link_device: mx80-r03-6
+    link_name: link17
+    link_if: ge-1/0/6
+    link_ip: 1.0.0.33/31
+
+  - link_device: mx80-r03-5
+    link_name: link18
+    link_if: ge-1/0/3
+    link_ip: 1.0.0.34/31
+  - link_device: mx80-r03-6
+    link_name: link18
+    link_if: ge-1/0/3
+    link_ip: 1.0.0.35/31
+
+  - link_device: mx80-r03-2
+    link_name: link19
+    link_if: ge-1/1/1
+    link_ip: 1.0.0.36/31
+  - link_device: mx104-r03-1
+    link_name: link19
+    link_if: ge-1/1/1
+    link_ip: 1.0.0.37/31
+
+  - link_device: mx80-r03-4
+    link_name: link20
+    link_if: ge-1/0/1
+    link_ip: 1.0.0.38/31
+  - link_device: mx104-r03-1
+    link_name: link20
+    link_if: ge-1/0/1
+    link_ip: 1.0.0.39/31

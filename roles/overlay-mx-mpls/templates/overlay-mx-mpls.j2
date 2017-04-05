@@ -3,31 +3,36 @@ groups {
     overlay-mx-mpls {
           protocols {
                     mpls {
-                        interface all;
+{% for link in inet_topology_links %}
+{% if link.link_device == inventory_hostname %}
+                        interface {{ link.link_if }};
+{% endif %}
+{% endfor %}
                         interface fxp0.0 {
                             disable;
                         }
                     }
                     ldp {
-                        interface all;
+{% for link in inet_topology_links %}
+{% if link.link_device == inventory_hostname %}
+                        interface {{ link.link_if }};
+{% endif %}
+{% endfor %}
                         interface fxp0.0 {
                             disable;
                         }
                     }
-           }
-           {% if inet_interfaces is defined %}
-                     interfaces {
-                     {% for inet_if in inet_interfaces %}
-                     {{ inet_if.name }} {
-                         unit 0 {
-                             family inet {
-                                 address {{ inet_if.ip_address }};
-                             }
-                             family mpls;
-                         }
-                     }
-                     {% endfor %}
-                   }
-           {% endif %}
+            }
+    interfaces {
+{% for link in inet_topology_links %}
+{% if link.link_device == inventory_hostname %}
+        {{ link.link_if }} {
+          unit 0 {
+            family mpls;
+          }
+        }
+{% endif %}
+{% endfor %}
     }
+  }
 }

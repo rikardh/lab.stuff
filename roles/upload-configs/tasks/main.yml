@@ -1,7 +1,7 @@
 ---
 # Uploads and OVERWRITES your entire assembled config
   - name: Uploading and OVERWRITING configurations to devices. commit confirmed 5 minutes.
-    tags: no-commit-confirmed
+    tags: commit-confirmed
     junos_install_config:
       host: "{{ ansible_host }}"
       confirm: "5"

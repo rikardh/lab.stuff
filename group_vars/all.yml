@@ -8,6 +8,8 @@ dns_server:
 
 default_route: 172.30.104.1
 
+route_target_base: "target:1.1.105.0"
+
 users:
   - name: rhjelm
     id_rsa_pub: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDUbflQJnQvHsZO3cNVVgh769ZqfHezxdJapKYDh5IX1VLzzmXExO58IacfeyFt9XNqDI/fdgLCTvvZye9oLPWQbX/QV668yZStGTwtOqsKRN9LY8OJgX6yq4PDxVNWfsSRjJx8JGSy7m8y1W9asTCd+rOXNKm4bU3lP7Yh+Oa8dAfTKqmJCBo+MKwh9hvNXQ9kawGJBS1CUIdqIfkRUhNO+GXJmHdI4OZFood+Xpdf3nEGm181+dLjpE0ilhJZmhQZ2RNLy7NV9n+3KBWQCzTuNqydfkgVui9DnqOLdQbB0FVpWIdsl9wAnTyzlOoMXIy7PqZYZPAvQP/kvbvCUUI5 rhjelm@rhjelm-mbp
@@ -15,4 +17,3 @@ users:
     encrypted_password: $1$JRZZGG4i$nJ6X.B1SyXEuhimsQDB6L0
 
 ae_interface_amount: 4
-

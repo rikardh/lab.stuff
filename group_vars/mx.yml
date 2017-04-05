@@ -1,0 +1,5 @@
+management_interface: fxp0
+
+mpls: "yes"
+router: "yes"
+l2switch: "no"

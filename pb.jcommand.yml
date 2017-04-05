@@ -1,28 +1,27 @@
 ---
 # JUNOS command playbook
 
-- name: Build configs for the lab setup
+- name: Running command(s) on Junos device(s)
   hosts: "{{ hosts }}"
   vars_files:
     - creds.yml
   connection: local
   gather_facts: no
-  roles:
-    - Juniper.junos
 
   tasks:
-    - name: Running a JUNOS command(s) on host(s) {{ hosts }}
+    - name: Running...
       junos_command:
-        timeout: "60"
         display: "text"
+        timeout: "60"
         host: "{{ ansible_host }}"
         username: "{{ login_name }}"
         password: "{{ login_password }}"
         commands:
-          - "show interface terse"
-        format: "text" # json sort of works in my modified junos_command.py /Rikard
+          - "show evpn instance"
+          - "show evpn database"
+          - "show configuration groups evpn-multihoming-mx"
+
       register: device_output
 
     - name: Show result
-      debug:
-        msg: "{{ device_output }}"
+      debug: var=device_output.stdout_lines

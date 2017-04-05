@@ -5,11 +5,13 @@ groups {
           protocols {
                     ospf {
                         area 0.0.0.0 {
-                         {% if underlay_inet_interfaces is defined %}
-                          {% for underlay_if in underlay_inet_interfaces %}
-                            interface {{ underlay_if }};
-                          {% endfor %}
-                         {% endif %}
+{% if inet_topology_links is defined %}
+{% for link in inet_topology_links %}
+{% if link.link_device == inventory_hostname %}
+                            interface {{ link.link_if }};
+{% endif %}
+{% endfor %}
+{% endif %}
                             interface lo0.0 {
                                 passive;
                             }

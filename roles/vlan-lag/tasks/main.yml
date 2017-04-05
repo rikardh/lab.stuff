@@ -1,0 +1,11 @@
+---
+# tasks file for vlan-lag
+
+  - name: Create config snippet directory for device
+    file: path=configs/snippets/{{ inventory_hostname }} state=directory
+
+  - name: Build LAG configs for devices and putting into -snippets- directory
+    template: src=lag.j2 dest=configs/snippets/{{ inventory_hostname }}/lag.conf
+
+  - name: Build VLAN configs for devices and putting into -snippets- directory
+    template: src=vlan.j2 dest=configs/snippets/{{ inventory_hostname }}/vlan.conf

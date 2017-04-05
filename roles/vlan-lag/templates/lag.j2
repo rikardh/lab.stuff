@@ -1,0 +1,27 @@
+{% if lags is defined %}
+apply-groups lags
+groups {
+    lags {
+    interfaces {
+{% for lag in lags %}
+                {{ lag.name }} {
+                  description "{{ lag.name }} {{ lag.description }}"
+                  aggregated-ether-options {
+                    lacp {
+                      active;
+                    }
+                  }
+                }
+{% for members in lag.members %}
+                {{ members }} {
+                  ether-options {
+                    802.3ad {{ lag.name }};
+                  }
+                }
+
+{% endfor %}
+{% endfor %}
+        }
+    }
+}
+{% endif %}

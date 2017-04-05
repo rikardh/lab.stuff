@@ -1,11 +1,9 @@
 ---
+# tasks file for evpn-tenants
+
 # Builds config with a config for MX and QFX
   - name: Create config snippet directory for device
     file: path=configs/snippets/{{ inventory_hostname }} state=directory
-    tags: common
 
   - name: Build default configs for devices and putting into -snippets- directory
-    template: src=common.j2 dest=configs/snippets/{{ inventory_hostname }}/common.conf
-    tags: common
-
-  
+    template: src=evpn-tenants.j2 dest=configs/snippets/{{ inventory_hostname }}/evpn-tenants.conf

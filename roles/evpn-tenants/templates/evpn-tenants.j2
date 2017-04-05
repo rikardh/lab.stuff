@@ -1,0 +1,88 @@
+
+apply-groups evpn-tenants
+groups {
+  evpn-tenants {
+{# create routing instance start #}
+{% for tenant in tenants %}
+    routing-instances {
+{% set type = {"virtual-switch": "vs", "vrf": "vrf"}[tenant.instance_type] | default("") %}
+      {{ tenant.name }}{{type}}{{ tenant.instance_id }} {
+        instance-type {{ tenant.instance_type }};
+{% if tenant.interfaces is defined %}
+{% for interface in tenant.interfaces %}
+        interface {{ interface.if }};
+{% endfor %}
+{% endif %}
+        vrf-target {{ route_target_base }}:{{ tenant.instance_id }};
+{% if tenant.vlans is defined %}
+        protocols {
+          evpn {
+{% for vlan in tenant.vlans %}
+            extended-vlan-list {{ vlan.id }};
+{% endfor %}
+          }
+        }
+        bridge-domains {
+{% for vlan in tenant.vlans %}
+          {{ vlan.name }} {
+            vlan-id {{ vlan.id }};
+{% if vlan.real_irb is defined %}
+            routing-interface irb.{{ vlan.id }};
+{% endif %}          }
+{% endfor %}
+        }
+{% endif %}
+      }
+    }
+{# start - configure interfaces for virtual-switches #}
+{% if tenant.interfaces is defined and type == "vs" %}
+    interfaces {
+    {% for interface in tenant.interfaces %}
+      {{ interface.if }} {
+          unit 0 {
+              family bridge {
+                interface-mode trunk;
+                vlan-id-list [{{ interface.vlan_id_list }}];
+              }
+          }
+      }
+      {% endfor %}
+    }
+{% endif %}
+{# end - configure interfaces for virtual-switches #}
+{# create irb start #}
+{% if tenant.vlans is defined %}
+{% for vlan in tenant.vlans %}
+{% if vlan.real_irb is defined %}
+    interfaces {
+      irb {
+          unit {{ vlan.id }} {
+              family inet {
+{% if vlan.virtual_gateway_address is defined %}
+                address {{ vlan.real_irb }} {
+                    virtual-gateway-address {{ vlan.virtual_gateway_address}};
+                }
+{% else %}
+                address {{ vlan.real_irb }};
+{% endif %}
+              }
+          }
+      }
+    }
+{% endif %}
+{% endfor %}
+{% endif %}
+{# create irb end #}
+{% endfor %}
+{# end - routing-instance creation #}
+
+        policy-options {
+          policy-statement evpn-pplb {
+            from protocol evpn;
+              then {
+                load-balance per-packet;
+              }
+            }
+        }
+    }
+}

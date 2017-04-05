@@ -1,0 +1,3 @@
+# mx104-1
+management_interface_ip: 172.30.105.69/23
+lo0_ip: 1.1.105.69

@@ -1,6 +1,6 @@
 replace:
 system {
-    host-name {{ host_name }};
+    host-name {{ inventory_hostname }};
     domain-name stolab;
     time-zone Europe/Stockholm;
     root-authentication {
@@ -8,19 +8,19 @@ system {
     }
 
     login {
-        {% for user in users %}
+{% for user in users %}
         user {{ user.name }} {
             class super-user;
             authentication {
-              {% if user.id_rsa_pub is defined %}
+{% if user.id_rsa_pub is defined %}
                 ssh-rsa "{{ user.id_rsa_pub }}"; ## SECRET-DATA
-              {% endif %}
-              {% if user.encrypted_password is defined %}
+{% endif %}
+{% if user.encrypted_password is defined %}
                 encrypted-password "{{ user.encrypted_password }}"; ## SECRET-DATA
-              {% endif %}
+{% endif %}
             }
         }
-        {% endfor %}
+{% endfor %}
     }
     services {
         ftp;
@@ -32,6 +32,7 @@ system {
             ssh;
         }
     }
+    commit synchronize;
     syslog {
         file default-log-messages {
             any any;
@@ -68,6 +69,7 @@ interfaces
 
 routing-options {
     router-id {{ lo0_ip }};
+    route-distinguisher-id {{ lo0_ip }};
     static {
         route 0.0.0.0/0 next-hop {{ default_route }};
     }
@@ -76,6 +78,7 @@ routing-options {
 protocols {
   lldp {
     interface all;
+    port-id-subtype interface-name;
   }
 }
 

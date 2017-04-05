@@ -1,0 +1,31 @@
+---
+tenants:
+  - name: tenant10
+    instance_type: virtual-switch
+    instance_id: 1001
+    vlans:
+      - name: servers
+        id: 100
+        real_irb: 172.16.0.253/24
+        virtual_gateway_address: 172.16.0.254
+      - name: hejsan
+        id: 200
+        real_irb: 110.0.0.253/24
+        virtual_gateway_address: 110.0.0.254
+      - name: other-vlan
+        id: 300
+    interfaces:
+      - if: ae0
+        vlan_id_list: 100 200
+
+  - name: tenant10
+    instance_type: vrf
+    instance_id: 5001
+    interfaces:
+      - if: irb.100
+
+  - name: tenant10
+    instance_type: vrf
+    instance_id: 5002
+    interfaces:
+      - if: irb.200

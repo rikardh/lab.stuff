@@ -1,25 +1,18 @@
 ---
 # Main playbook for lab-config
 
-- name: Build configs for the lab setup
+- name: Set default lab config and any IP connectivity
   hosts: "{{ hosts }}"
 
   connection: local
   gather_facts: no
   vars_files:
     - topology.yml
-    - evpn-tenants.yml
 
   roles:
     - clean-files
     - common
-    - { role: underlay-ospf,        when: router == "yes",    tags: ospf}
-    - { role: evpn-ibgp,            when: router == "yes",    tags: evpn }
-    - { role: overlay-mx-mpls,      when: mpls == "yes",      tags: mpls }
-    - { role: evpn-multihoming-mx,  when: router == "yes",    tags: multi }
-    - { role: inet-topology,        when: router == "yes",    tags: topo }
-    - { role: vlan-lag,             when: l2switch == "yes",  tags: vlan }
-    - { role: evpn-tenants,         when: router == "yes",    tags: tenants }
+    - { role: inet-topology, when: router == "yes" }
 
 # add additional roles above to build complete configurations
 

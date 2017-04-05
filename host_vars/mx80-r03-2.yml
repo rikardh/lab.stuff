@@ -1,0 +1,14 @@
+# mx80-2
+management_interface_ip: 172.30.105.62/23
+lo0_ip: 1.1.105.62
+
+
+
+#ae_interfaces:
+#  - name: ae0
+#    description: my interface
+#    esi: 00:00:11:11:22:22:33:33:44:44
+#    mode: all-active
+#    ae_members:
+#      - ge-0/0/0
+#      - ge-0/0/1

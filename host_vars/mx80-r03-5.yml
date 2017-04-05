@@ -1,0 +1,11 @@
+# mx80-5
+management_interface_ip: 172.30.105.65/23
+lo0_ip: 1.1.105.65
+
+evpn_mh_interfaces:
+  - name: ae0
+    description: to qfx5100-r04-1 xe-0/0/0
+    esi: 00:00:11:11:22:22:33:33:44:44
+    mode: all-active
+    ae_members:
+      - ge-1/1/9

@@ -3,6 +3,14 @@ apply-groups evpn-ibgp
 groups {
     evpn-ibgp {
           routing-options {
+            forwarding-table {
+                export evpn-pplb;
+                chained-composite-next-hop {
+                    ingress {
+                        evpn;
+                    }
+                }
+              }
             autonomous-system 65000;
           }
 
@@ -14,16 +22,23 @@ groups {
                    family evpn {
                        signaling;
                    }
-                   {% for ahost in ansible_play_hosts %}
-                   {% if inventory_hostname == ahost %}
-                     {% else %}
-                    neighbor {{ hostvars[ahost]['lo0_ip'] }} {
-                        description "{{ hostvars[ahost]['host_name'] }}";
-                    }
-                   {% endif %}
-                   {% endfor %}
+{% for ahost in ansible_play_hosts %}
+{% if ( inventory_hostname != ahost ) %}
+                     neighbor {{ hostvars[ahost]['lo0_ip'] }} {
+                      description "{{ ahost }}";
+                     }
+{% endif %}
+{% endfor %}
                  }
               }
           }
+policy-options {
+    policy-statement evpn-pplb {
+        from protocol evpn;
+        then {
+            load-balance per-packet;
+        }
+    }
+}
   }
 }

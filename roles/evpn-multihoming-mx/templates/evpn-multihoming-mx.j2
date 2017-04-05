@@ -1,26 +1,34 @@
-
-{% if ae_interfaces is defined %}
+{% if evpn_mh_interfaces is defined %}
 apply-groups evpn-multihoming-mx
 groups {
     evpn-multihoming-mx {
     interfaces {
-    {% for ae_if in ae_interfaces %}
-                {{ ae_if.name }} {
-                  description "{{ ae_if.name }} {{ ae_if.description }}"
+{% for mh_if in evpn_mh_interfaces %}
+                {{ mh_if.name }} {
+                vlan-tagging;
+                encapsulation flexible-ethernet-services;
+                  description "{{ mh_if.name }} {{ mh_if.description }}"
+                  mtu 9192;
+                  aggregated-ether-options {
+                    lacp {
+                      active;
+                      system-id 00:00:00:00:00:01;
+                    }
+                  }
                   esi {
-                    {{ ae_if.esi }};
-                    {{ ae_if.mode }};
+                    {{ mh_if.esi }};
+                    {{ mh_if.mode }};
                   }
                 }
-            {% for ae_if_members in ae_if.ae_members %}
-                {{ ae_if_members }} {
+{% for mh_if_members in mh_if.ae_members %}
+                {{ mh_if_members }} {
                   gigether-options {
-                    802.3ad {{ ae_if.name }};
+                    802.3ad {{ mh_if.name }};
                   }
                 }
 
-            {% endfor %}
-          {% endfor %}
+{% endfor %}
+{% endfor %}
         }
     }
 }
